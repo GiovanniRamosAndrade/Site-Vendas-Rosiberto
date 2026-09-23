@@ -101,6 +101,26 @@ window.VITRINE_DADOS = {
           "url": "https://amazon.com.br"
         }
       ]
+    },
+    {
+      "id": "card-muekg3st-kfbjd1",
+      "title": "Ventilador",
+      "subtitle": "Bla bla bla",
+      "category": "Decoracao",
+      "img": "https://io.convertiez.com.br/m/lojasedmil/shop/products/images/1539/large/ventilador-de-mesa-2-em-1-turbo-force-vf42-arno-40cm-com-6-pas-127v-preto_12065.jpg",
+      "pinned": false,
+      "links": [
+        {
+          "loja": "Shopee",
+          "nome": "Ventilador",
+          "url": "https://www.amazon.com.br/?tag=admarketbr-20&ref=pd_sl_1dc9de7559fff01940f69b3a46b4f7896d96f2178c21d0a292385dec&mfadid=adm"
+        },
+        {
+          "loja": "Amazon",
+          "nome": "Ventilador",
+          "url": "https://www.amazon.com.br/?tag=admarketbr-20&ref=pd_sl_1dc9de7559fff01940f69b3a46b4f7896d96f2178c21d0a292385dec&mfadid=adm"
+        }
+      ]
     }
   ]
 };
