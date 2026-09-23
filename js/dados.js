@@ -4,8 +4,8 @@ window.VITRINE_DADOS = {
   "products": [
     {
       "id": "card-mue9g86e-sxkci8",
-      "title": "Testando",
-      "subtitle": "AAAAAAAAAAA",
+      "title": "Maconha a vontade",
+      "subtitle": "maconha de graça!!!!!!",
       "category": "",
       "img": "https://static.vecteezy.com/ti/fotos-gratis/t2/60843811-fechar-se-do-pingos-de-chuva-em-folhas-hd-fundo-luxo-hd-papel-de-parede-imagem-na-moda-fundo-ilustracao-gratis-foto.jpg",
       "pinned": false,
@@ -14,21 +14,6 @@ window.VITRINE_DADOS = {
           "loja": "Shopee",
           "nome": "Maconha",
           "url": "https://www.google.com/search?client=opera-gx&q=imagem&sourceid=opera&ie=UTF-8&oe=UTF-8#sv=CAMSZxowKg5sTTFXeEljU1J2TUM2TTIObE0xV3hJY1NSdk1DNk06DjJvTTV1cTNoazFqY2dNIAQqLwobXzJQQ3phcUNJTzYtbTVPVVBoSnFxMkE0XzY3Eg5sTTFXeEljU1J2TUM2TRgAMAEYByCfgOCYC0oIEAEYASABKAE"
-        }
-      ]
-    },
-    {
-      "id": "grupo-promocoes",
-      "title": "GRUPO DE PROMOÇÕES",
-      "subtitle": "Clique para economizar 🔥",
-      "category": "Promocoes",
-      "img": "https://storage.googleapis.com/tipz-hml/thumbnails/1769188161995-LOGO_QUERIDO_ACHADO.jpg",
-      "pinned": true,
-      "links": [
-        {
-          "loja": "Grupo exclusivo",
-          "nome": "Acessar Grupo VIP de Descontos",
-          "url": "https://tipz-api-1041591820390.us-east1.run.app/links/57239/click"
         }
       ]
     },
