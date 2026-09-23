@@ -9,6 +9,16 @@
   <script src="js/admin.js" defer></script>
 </head>
 <body class="admin-page">
+  <section id="access-gate" class="access-gate panel">
+    <h1>Painel privado</h1>
+    <p id="access-message">Verificando seu link de edição...</p>
+    <p>Guarde o link privado nos favoritos. Quem tiver esse link poderá publicar alterações.</p>
+    <details><summary>Primeira configuração: gerar uma chave</summary>
+      <button id="generate-key" class="button secondary" type="button">Gerar chave segura</button>
+      <p id="generated-key" class="generated-key"></p>
+      <small>Copie a chave para o segredo <strong>PUBLISH_KEY</strong> na Cloudflare. Depois abra o link mostrado aqui.</small>
+    </details>
+  </section>
   <header class="admin-header">
     <div><p class="eyebrow">Painel da vitrine</p><h1>Editar produtos</h1><p>Adicione cards, fotos e links sem editar código.</p></div>
     <a class="button secondary" href="index.html" target="_blank" rel="noopener">Ver vitrine ↗</a>
@@ -40,10 +50,10 @@
         <div class="editor-actions"><button class="button" type="submit">Salvar card</button><button class="button secondary" id="move-up" type="button">↑ Subir</button><button class="button secondary" id="move-down" type="button">↓ Descer</button></div>
       </form>
       <div class="panel publish-panel">
-        <h2>Salvar e publicar</h2>
-        <p>O rascunho fica salvo neste navegador. Para atualizar a vitrine publicada, baixe <strong>dados.js</strong> e substitua o arquivo antigo dentro da pasta <strong>js</strong> na hospedagem. Envie esse arquivo ao responsável pela hospedagem se necessário.</p>
-        <div class="editor-actions"><button class="button" id="download-data" type="button">Baixar dados.js para publicar</button><button class="button secondary" id="export-backup" type="button">Baixar backup JSON</button><label class="button secondary import-label">Importar backup JSON<input id="import-backup" type="file" accept="application/json,.json" hidden></label></div>
-        <p class="notice">Este painel não possui login nem servidor. Abrir o painel em outro aparelho não leva o rascunho junto; use o backup JSON para transferir. A troca de dados.js atualiza o site para todos.</p>
+        <h2>Publicar no site</h2>
+        <p>Depois de editar, clique em <strong>Publicar agora</strong>. O painel cria um commit no GitHub e a Cloudflare atualiza a vitrine após o deploy. O rascunho continua salvo neste navegador.</p>
+        <div class="editor-actions"><button class="button" id="publish" type="button">Publicar agora</button><button class="button secondary" id="export-backup" type="button">Baixar backup JSON</button><label class="button secondary import-label">Importar backup JSON<input id="import-backup" type="file" accept="application/json,.json" hidden></label></div>
+        <p class="notice">O link privado permite publicar sem entrar no GitHub. Não o envie a visitantes. Para editar em outro aparelho, abra o link privado lá; use o backup JSON para transferir rascunhos ainda não publicados.</p>
         <button class="text-button" id="reset-draft" type="button">Descartar rascunho e voltar aos dados publicados</button>
       </div>
       <p id="status" class="status" role="status" aria-live="polite"></p>

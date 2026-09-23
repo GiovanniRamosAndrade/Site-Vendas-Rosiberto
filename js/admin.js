@@ -1,5 +1,6 @@
 (() => {
   const key = 'vitrine-draft-v1';
+  const publishKey = new URLSearchParams(location.hash.slice(1)).get('chave') || '';
   const base = window.VITRINE_DADOS || {siteTitle:'Produtos e promoções',brand:'#7c442b',products:[]};
   const clone = value => JSON.parse(JSON.stringify(value));
   let data = clone(base);
@@ -133,10 +134,20 @@
   $('#move-down').addEventListener('click', () => move(1));
   for (const id of ['site-title','brand']) $('#'+id).addEventListener('change', () => { if (!current()) { data.siteTitle = $('#site-title').value.trim(); data.brand = $('#brand').value; save(); } else commit(); });
   $('#brand').addEventListener('input', () => document.documentElement.style.setProperty('--brand', $('#brand').value));
-  $('#download-data').addEventListener('click', () => {
+  $('#publish').addEventListener('click', async () => {
     if (!commit()) return;
-    download('dados.js', 'window.VITRINE_DADOS = ' + JSON.stringify(data, null, 2).replace(/</g, '\\u003c') + ';\n', 'text/javascript;charset=utf-8');
-    message('dados.js baixado. Substitua o arquivo em js/dados.js na hospedagem para publicar.');
+    const button = $('#publish'); button.disabled = true; button.textContent = 'Publicando...';
+    try {
+      const response = await fetch('/api/publicar', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json', 'Authorization':'Bearer ' + publishKey},
+        body: JSON.stringify(data), cache: 'no-store'
+      });
+      const result = await response.json();
+      if (!response.ok) throw Error(result.error || 'Falha ao publicar.');
+      message('Commit criado! A vitrine será atualizada após o deploy da Cloudflare.');
+    } catch (error) { message(error.message || 'Não foi possível publicar.', true); }
+    finally { button.disabled = false; button.textContent = 'Publicar agora'; }
   });
   $('#export-backup').addEventListener('click', () => {
     if (!commit()) return;
@@ -160,5 +171,23 @@
     if (!current()) return;
     if (form.elements.title.value !== current().title || form.elements.img.value !== (current().img || '') || linkList.querySelectorAll('.link-row').length !== (current().links || []).length) { e.preventDefault(); e.returnValue = ''; }
   });
-  render();
+  $('#generate-key').addEventListener('click', () => {
+    const bytes = crypto.getRandomValues(new Uint8Array(32));
+    const generated = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+    const url = new URL(location.href); url.hash = 'chave=' + generated;
+    $('#generated-key').textContent = 'PUBLISH_KEY: ' + generated + '\nLink privado: ' + url.href;
+  });
+  async function authorize() {
+    if (!publishKey) { $('#access-message').textContent = 'Abra o link privado de edição para acessar o painel.'; return; }
+    try {
+      const response = await fetch('/api/autorizacao', {
+        headers: {'Authorization':'Bearer ' + publishKey}, cache: 'no-store'
+      });
+      if (!response.ok) throw Error('Este link privado não foi reconhecido. Confira a chave configurada na Cloudflare.');
+      document.body.classList.add('authorized');
+      $('#access-gate').hidden = true;
+      render();
+    } catch (error) { $('#access-message').textContent = error.message; }
+  }
+  authorize();
 })();

@@ -374,7 +374,9 @@ main {
 [hidden] { display: none !important; }
 .empty:not([hidden]) { display: block; }
 .post-container:has(.post-media[hidden]) { grid-template-columns: 1fr; }
-.site-head { width: min(1220px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 0; }
+.site-head { width: min(1220px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.edit-link { display: inline-flex; align-items: center; flex-shrink: 0; padding: 9px 13px; border: 1px solid var(--line); border-radius: 10px; background: white; color: var(--brand-dark); text-decoration: none; font-size: .88rem; font-weight: 750; }
+.edit-link:hover { border-color: var(--brand); }
 .site-head h1 { margin: 0; font-size: clamp(1.5rem, 4vw, 2.5rem); }
 .search span { position: absolute; left: 17px; top: 7px; font-size: 28px; color: var(--muted); }
 .no-image { display: grid; place-items: center; height: 100%; color: var(--brand-dark); font-weight: 700; }
@@ -420,3 +422,13 @@ main {
 .status.error { color: #a12626; }
 @media (max-width: 850px) { .admin-layout { grid-template-columns: 1fr; } .admin-side { position: static; } .product-list { max-height: 220px; } .link-row { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .admin-header { align-items: flex-start; flex-direction: column; } .field-row, .link-row { grid-template-columns: 1fr; } .panel { padding: 16px; } }
+@media (max-width: 560px) { .site-head { align-items: flex-start; flex-direction: column; } }
+
+/* A edição fica invisível até o servidor confirmar a chave do link. */
+.admin-page:not(.authorized) .admin-header, .admin-page:not(.authorized) .admin-layout { display: none; }
+.access-gate { width: min(560px, calc(100% - 32px)); margin: 10vh auto; }
+.access-gate h1 { margin-top: 0; }
+.access-gate details { margin-top: 22px; }
+.access-gate summary { cursor: pointer; color: var(--brand-dark); font-weight: 750; }
+.access-gate details .button { margin-top: 15px; }
+.generated-key { overflow-wrap: anywhere; white-space: pre-wrap; font-size: .88rem; }

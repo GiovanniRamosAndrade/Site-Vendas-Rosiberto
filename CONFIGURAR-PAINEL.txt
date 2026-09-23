@@ -1,0 +1,57 @@
+PAINEL PRIVADO COM PUBLICAÇÃO AUTOMÁTICA
+
+Os arquivos do site continuam no GitHub. Uma função da Cloudflare cria o commit
+em js/dados.js quando o cliente clica em "Publicar agora". A Cloudflare faz o
+deploy desse commit automaticamente. O cliente usa um link privado e não
+precisa acessar o GitHub.
+
+1. ARQUIVOS
+Envie os arquivos desta atualização ao repositório, preservando as pastas
+css/, js/ e functions/. Se você já alterou produtos em js/dados.js no GitHub,
+guarde a versão atual desse arquivo: não substitua os dados personalizados
+pelos exemplos de um pacote anterior.
+
+2. BUILD DA CLOUDFLARE
+No projeto Cloudflare Pages conectado ao repositório, abra Settings > Builds &
+deployments. Coloque Build command: sh build.sh e Build output directory: dist.
+Salve e faça um novo deploy. A pasta functions/ deve ficar na raiz do
+repositório, fora de dist. O script copia o site para dist.
+
+3. TOKEN DO GITHUB
+Na sua conta GitHub, abra Settings > Developer settings > Personal access tokens
+> Fine-grained tokens > Generate new token. Escolha como Resource owner sua
+conta GiovanniRamosAndrade, selecione APENAS o repositório
+Site-Vendas-Rosiberto. Em Repository permissions, dê Contents: Read and write.
+Defina expiração conforme sua preferência e guarde o token para renovar antes
+de vencer. Não coloque o token em nenhum arquivo, conversa ou página pública.
+
+4. SEGREDOS DA CLOUDFLARE
+No projeto Cloudflare Pages, abra Settings > Variables and Secrets. Adicione
+GITHUB_TOKEN como Secret, colando o token do passo 3. Adicione PUBLISH_KEY
+também como Secret: para gerar uma chave forte, abra /admin.html no site
+publicado e use "Primeira configuração: gerar uma chave". Copie somente a
+chave hexadecimal gerada para PUBLISH_KEY. Configure ambos no ambiente de
+Production. Salve e refaça o deploy para os segredos entrarem em vigor.
+
+5. LINK PRIVADO
+Na mesma tela de admin.html, copie o link privado gerado, que termina em
+#chave=... e envie SOMENTE ao cliente. O fragmento #chave não é enviado ao
+servidor como parte da URL; o painel o utiliza para autenticar pedidos de
+publicação. Quem receber o link terá permissão de publicar. Para revogar,
+troque PUBLISH_KEY na Cloudflare e gere outro link.
+
+6. TESTE
+Abra o link privado, edite um card, clique em "Salvar card" e então
+"Publicar agora". Quando aparecer "Commit criado", veja o novo commit no
+GitHub. Espere a Cloudflare terminar o deploy e abra o site em outro navegador
+para conferir a mudança. O site do cliente não mostra o botão de editar.
+
+OBSERVAÇÕES
+- A URL /admin.html continua acessível, mas sem a chave não abre o editor.
+- O segredo GITHUB_TOKEN fica somente no servidor Cloudflare. Nunca cole o
+  token GitHub em código, HTML ou URL.
+- Fotos selecionadas do aparelho são gravadas dentro de dados.js e podem
+  aumentar o arquivo. Para muitas fotos, prefira imagens hospedadas por URL.
+- Se seus arquivos JS estão na raiz, e não em js/, configure também a variável
+  GITHUB_DATA_PATH com o valor dados.js e ajuste build.sh para copiar os JS
+  da raiz. O pacote atual espera a estrutura com pastas.
