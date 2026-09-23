@@ -44,3 +44,5 @@ Se o site não estiver conectado ao GitHub em Settings > Build/Builds, conecte
 esse repositório primeiro. O Worker deve ter exatamente o nome indicado em
 wrangler.jsonc. Se você usou a versão sem pastas, ajuste GITHUB_DATA_PATH e
 build.sh; esta atualização pressupõe css/ e js/.
+
+Painel de edição configurado com Cloudflare Workers.
