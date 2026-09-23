@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editar vitrine</title>
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/dados.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</head>
+<body class="admin-page">
+  <header class="admin-header">
+    <div><p class="eyebrow">Painel da vitrine</p><h1>Editar produtos</h1><p>Adicione cards, fotos e links sem editar código.</p></div>
+    <a class="button secondary" href="index.html" target="_blank" rel="noopener">Ver vitrine ↗</a>
+  </header>
+  <main class="admin-layout">
+    <aside class="admin-side panel">
+      <h2>Cards <span id="product-count"></span></h2>
+      <button class="button" id="add-product" type="button">+ Adicionar card</button>
+      <div id="product-list" class="product-list"></div>
+    </aside>
+    <section class="admin-content">
+      <div class="panel">
+        <h2>Dados da vitrine</h2>
+        <div class="field-row">
+          <label>Nome da vitrine<input id="site-title" maxlength="90" placeholder="Produtos e promoções"></label>
+          <label>Cor principal<input id="brand" type="color" value="#7c442b"></label>
+        </div>
+      </div>
+      <form id="editor" class="panel">
+        <div class="panel-heading"><h2 id="editor-heading">Editar card</h2><button class="button danger" id="delete-product" type="button">Excluir card</button></div>
+        <div class="field-row"><label>Título do card *<input name="title" maxlength="120" required placeholder="Ex.: Achados para cozinha"></label><label>Categoria<input name="category" maxlength="60" placeholder="Ex.: Decoração" list="categories"><datalist id="categories"></datalist></label></div>
+        <label>Descrição<input name="subtitle" maxlength="220" placeholder="Uma frase curta sobre os produtos"></label>
+        <label>URL da imagem<input name="img" type="text" placeholder="https://site.com/imagem.jpg"></label>
+        <label class="file-label">Ou escolher uma foto do aparelho<input id="image-upload" type="file" accept="image/*"><small>A foto é reduzida antes de salvar. Para imagens grandes ou muitos produtos, prefira um link de imagem.</small></label>
+        <img id="image-preview" class="image-preview" alt="Prévia da imagem" hidden>
+        <label class="checkbox"><input name="pinned" type="checkbox"> Destacar este card</label>
+        <div class="panel-heading"><h3>Links deste card</h3><button class="button secondary" id="add-link" type="button">+ Adicionar link</button></div>
+        <div id="link-list" class="link-edit-list"></div>
+        <div class="editor-actions"><button class="button" type="submit">Salvar card</button><button class="button secondary" id="move-up" type="button">↑ Subir</button><button class="button secondary" id="move-down" type="button">↓ Descer</button></div>
+      </form>
+      <div class="panel publish-panel">
+        <h2>Salvar e publicar</h2>
+        <p>O rascunho fica salvo neste navegador. Para atualizar a vitrine publicada, baixe <strong>dados.js</strong> e substitua o arquivo antigo dentro da pasta <strong>js</strong> na hospedagem. Envie esse arquivo ao responsável pela hospedagem se necessário.</p>
+        <div class="editor-actions"><button class="button" id="download-data" type="button">Baixar dados.js para publicar</button><button class="button secondary" id="export-backup" type="button">Baixar backup JSON</button><label class="button secondary import-label">Importar backup JSON<input id="import-backup" type="file" accept="application/json,.json" hidden></label></div>
+        <p class="notice">Este painel não possui login nem servidor. Abrir o painel em outro aparelho não leva o rascunho junto; use o backup JSON para transferir. A troca de dados.js atualiza o site para todos.</p>
+        <button class="text-button" id="reset-draft" type="button">Descartar rascunho e voltar aos dados publicados</button>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+</body>
+</html>

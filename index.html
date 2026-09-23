@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Produtos e ofertas em um só lugar">
+  <title>Produtos e promoções</title>
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/dados.js" defer></script>
+  <script src="js/loja.js" defer></script>
+</head>
+<body>
+  <header class="site-head"><h1 id="site-title">Produtos e promoções</h1></header>
+  <div class="tools">
+    <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar produto ou coleção" aria-label="Buscar produto ou coleção"></label>
+    <select id="filter" aria-label="Filtrar categoria"><option value="all">Todas as categorias</option></select>
+  </div>
+  <main>
+    <section class="grid" id="cards" aria-label="Produtos e coleções"></section>
+    <div class="empty" id="empty" hidden>Nenhum produto corresponde à sua busca.</div>
+  </main>
+</body>
+</html>
