@@ -1,0 +1,62 @@
+COMO INSTALAR: PÁGINA INICIAL + FEED + REELS
+
+Sua página teste.html (com as imagens enviadas) virou o index.html deste pacote.
+O Feed existente foi colocado em achadinhos.html, conforme o link do botão
+DESCOBRIR da sua página. O botão ASSISTIR AGORA abre reels.html em outra aba.
+
+ESTRUTURA NO MESMO SITE
+  /                    -> Sua página inicial Vem Ver Promo
+  /achadinhos.html     -> Produtos do Feed já existentes
+  /reels.html          -> Produtos dos Reels (começa vazio)
+  /admin.html#chave=...       -> Painel Feed
+  /reels-admin.html#chave=... -> Painel Reels
+
+Depois de entrar pelo link privado em admin.html, o cliente verá os botões
+"Editar Feed" e "Editar Reels". A mesma chave abre os dois painéis; os
+rascunhos, os backups e os dados publicados ficam separados. O Feed publica
+js/dados.js; o Reels publica js/reels-dados.js. A cor do Reels segue a cor
+publicada do Feed. Não é preciso criar outro Worker nem outro token GitHub.
+
+INSTALAÇÃO NO GITHUB
+Na branch main de GiovanniRamosAndrade/Site-Vendas-Rosiberto, mantenha
+exatamente estes caminhos. Extraia o ZIP primeiro e envie os arquivos
+mantendo as pastas img/, css/, js/ e functions/.
+
+Arquivos novos:
+  achadinhos.html
+  reels.html
+  reels-post.html
+  reels-admin.html
+  img/image.png
+  img/icon-feed.png
+  img/icon-reels.png
+  css/reels-extra.css
+  js/reels-dados.js
+  js/reels-loja.js
+  js/tema-feed.js
+
+Arquivos que substituem os antigos:
+  index.html                  (sua página inicial, antes teste.html)
+  post.html                   (volta para achadinhos.html)
+  admin.html                  (escolha entre Feed e Reels)
+  build.sh                    (inclui as novas páginas e imagens no deploy)
+  _headers
+  js/admin.js                 (salva cada catálogo separadamente)
+  functions/api/publicar.js  (commita o arquivo certo no GitHub)
+
+IMPORTANTE: NÃO substitua js/dados.js nem css/estilo.css. O arquivo js/dados.js
+da branch main contém os produtos Feed atuais. Este ZIP não o inclui.
+Se você modificou index.html, post.html, admin.html, build.sh, _headers,
+js/admin.js ou functions/api/publicar.js depois de instalar o painel anterior,
+essas mudanças precisam ser conciliadas antes de substituir os arquivos.
+O achadinhos.html fornecido é uma cópia do index.html da versão anterior;
+se o seu Feed foi personalizado depois, copie o index.html atual do GitHub
+para achadinhos.html antes de enviar este pacote.
+
+Depois do commit, aguarde o deploy da Cloudflare terminar. Abra o link
+Production mostrado em Workers & Pages > seu Worker > Domains. A raiz /
+deve mostrar sua página inicial e os dois botões devem abrir seus catálogos.
+
+O cliente deve guardar somente o link privado do painel Feed. O botão
+"Editar Reels" leva ao outro painel mantendo #chave no mesmo navegador.
+Não divulgue o link privado nem inclua a chave em prints.

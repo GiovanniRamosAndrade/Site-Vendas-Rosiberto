@@ -53,14 +53,20 @@ export async function onRequestPost({request, env}) {
   if (Number(request.headers.get('Content-Length') || 0) > 2_000_000) return reply('Dados muito grandes. Use URLs de imagens.', 413);
 
   let data;
+  let catalog = 'feed';
   try {
     const body = await request.text();
     if (body.length > 2_000_000) return reply('Dados muito grandes. Use URLs de imagens.', 413);
-    data = JSON.parse(body);
+    const payload = JSON.parse(body);
+    if (payload && Object.hasOwn(payload, 'catalog')) {
+      if (!['feed', 'reels'].includes(payload.catalog)) return reply('Vitrine inválida.', 400);
+      catalog = payload.catalog;
+      data = payload.data;
+    } else data = payload; // Compatibilidade com versões antigas do painel Feed.
   } catch { return reply('Dados inválidos.', 400); }
   if (!validData(data)) return reply('Revise os campos e links dos cards.', 400);
 
-  const path = env.GITHUB_DATA_PATH || 'js/dados.js';
+  const path = catalog === 'reels' ? 'js/reels-dados.js' : (env.GITHUB_DATA_PATH || 'js/dados.js');
   const api = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
   const headers = {
     'Accept':'application/vnd.github+json',
@@ -71,9 +77,9 @@ export async function onRequestPost({request, env}) {
   let previous;
   try {
     const current = await fetch(`${api}?ref=${BRANCH}`, {headers});
-    if (!current.ok) return reply('Não foi possível localizar dados.js no repositório. Confira o caminho e o token.', 502);
+    if (!current.ok) return reply(`Não foi possível ler ${path} no GitHub (HTTP ${current.status}). Confira o arquivo e o token.`, 502);
     previous = await current.json();
-    if (!previous.sha || previous.type !== 'file') return reply('dados.js não é um arquivo válido.', 502);
+    if (!previous.sha || previous.type !== 'file') return reply(`${path} não é um arquivo válido.`, 502);
   } catch { return reply('Falha de conexão com o GitHub.', 502); }
 
   const safe = {
@@ -91,7 +97,7 @@ export async function onRequestPost({request, env}) {
   try {
     const uploaded = await fetch(api, {
       method:'PUT', headers:{...headers, 'Content-Type':'application/json'},
-      body:JSON.stringify({message:'Atualizar produtos pela vitrine', content, sha:previous.sha, branch:BRANCH})
+      body:JSON.stringify({message:`Atualizar produtos de ${catalog === 'reels' ? 'Reels' : 'Feed'}`, content, sha:previous.sha, branch:BRANCH})
     });
     if (!uploaded.ok) return reply(uploaded.status === 409 ? 'Outra alteração ocorreu no GitHub. Atualize a página e tente novamente.' : 'O GitHub recusou o commit. Confira a permissão do token.', 502);
     const result = await uploaded.json();

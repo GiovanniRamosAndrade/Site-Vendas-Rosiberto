@@ -1,0 +1,5 @@
+.catalog-nav { display:flex; gap:10px; flex-wrap:wrap; }
+.catalog-nav a { color:var(--brand-dark); background:white; padding:9px 12px; border:1px solid var(--line); border-radius:10px; text-decoration:none; font-weight:750; }
+.catalog-nav a[aria-current="page"] { background:var(--brand); color:white; }
+.admin-catalog-nav { width:min(1240px,calc(100% - 32px)); margin:0 auto 14px; display:flex; gap:10px; }
+.admin-page:not(.authorized) .admin-catalog-nav { display:none; }

@@ -3,13 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Editar vitrine</title>
+  <title>Editar Reels</title>
   <link rel="stylesheet" href="css/estilo.css">
   <link rel="stylesheet" href="css/reels-extra.css">
   <script src="js/dados.js" defer></script>
+  <script src="js/tema-feed.js" defer></script>
+  <script src="js/reels-dados.js" defer></script>
   <script src="js/admin.js" defer></script>
 </head>
-<body class="admin-page">
+<body class="admin-page" data-catalog="reels">
   <section id="access-gate" class="access-gate panel">
     <h1>Painel privado</h1>
     <p id="access-message">Verificando seu link de edição...</p>
@@ -21,10 +23,10 @@
     </details>
   </section>
   <header class="admin-header">
-    <div><p class="eyebrow">Painel da vitrine</p><h1>Editar produtos</h1><p>Adicione cards, fotos e links sem editar código.</p></div>
-    <a class="button secondary" href="achadinhos.html" target="_blank" rel="noopener">Ver Feed ↗</a>
+    <div><p class="eyebrow">Painel do Reels</p><h1>Editar produtos dos Reels</h1><p>Adicione cards, fotos e links sem editar código.</p></div>
+    <a class="button secondary" href="reels.html" target="_blank" rel="noopener">Ver Reels ↗</a>
   </header>
-  <nav class="admin-catalog-nav" aria-label="Editar catálogos"><span class="button" aria-current="page">Editar Feed</span><a id="reels-admin-link" class="button secondary" href="reels-admin.html">Editar Reels</a></nav>
+  <nav class="admin-catalog-nav" aria-label="Editar catálogos"><a id="feed-admin-link" class="button secondary" href="admin.html">Editar Feed</a><span class="button" aria-current="page">Editar Reels</span></nav>
   <main class="admin-layout">
     <aside class="admin-side panel">
       <h2>Cards <span id="product-count"></span></h2>

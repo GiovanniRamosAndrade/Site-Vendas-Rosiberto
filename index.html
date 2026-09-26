@@ -1,23 +1,233 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Produtos e ofertas em um só lugar">
-  <title>Produtos e promoções</title>
-  <link rel="stylesheet" href="css/estilo.css">
-  <script src="js/dados.js" defer></script>
-  <script src="js/loja.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vem Ver Promo - Início</title>
+    <!-- Importando a fonte Poppins para um visual moderno -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #EADCC8; /* Bege Areia */
+            color: #4A3525;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Elementos decorativos de fundo subtis */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: radial-gradient(#8B5E3C 0.75px, transparent 0.75px);
+            background-size: 30px 30px;
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        /* Cabeçalho / Logo */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #8B5E3C;
+            line-height: 1.1;
+            text-align: left;
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 22px;
+            font-weight: 600;
+            color: #5D3A20;
+        }
+
+        .slogan {
+            font-size: 14px;
+            color: #7A5C46;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* Container dos Cards - ajustado para 2 cards */
+        .cards-container {
+            display: flex;
+            gap: 40px; /* Aumentei um pouco o espaço entre os 2 cards */
+            max-width: 720px; /* Largura máxima para 2 cartões lado a lado */
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo Individual dos Cards */
+        .card {
+            background: rgba(247, 245, 239, 0.85); /* Off white translúcido */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 25px;
+            width: 340px; /* Ligeiramente mais largos para melhor preenchimento */
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(139, 94, 60, 0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(139, 94, 60, 0.2);
+        }
+
+        .card-icon {
+            font-size: 50px; /* Ícones ligeiramente maiores */
+            margin-bottom: 20px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #8B5E3C;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #634832;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* Botões */
+        .card-btn {
+            background-color: #C78A6B; /* Terracotta Suave */
+            color: #F7F5EF;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 12px rgba(199, 138, 107, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            width: 100%; /* Botão ocupa a largura total do card */
+        }
+
+        .card-btn:hover {
+            background-color: #8B5E3C; /* Marrom Terra */
+        }
+
+        .card-btn:active {
+            transform: scale(0.98);
+        }
+
+
+        .scroll-indicator span {
+            font-size: 16px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 768px) { /* Ajuste do ponto de quebra para 2 cards */
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 24px;
+            }
+            .card {
+                width: 100%;
+                max-width: 360px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="site-head"><h1 id="site-title">Produtos e promoções</h1></header>
-  <div class="tools">
-    <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar produto ou coleção" aria-label="Buscar produto ou coleção"></label>
-    <select id="filter" aria-label="Filtrar categoria"><option value="all">Todas as categorias</option></select>
-  </div>
-  <main>
-    <section class="grid" id="cards" aria-label="Produtos e coleções"></section>
-    <div class="empty" id="empty" hidden>Nenhum produto corresponde à sua busca.</div>
-  </main>
+
+    <!-- Cabeçalho com Logo -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">
+                <img src="img/image.png" width="90" alt="Logo Vem Ver Promo">
+            </div>
+            <div class="logo-text">
+                Vem Ver <span>Promo</span>
+            </div>
+        </div>
+        <p class="slogan">Onde a economia encontra a qualidade</p>
+    </header>
+
+    <!-- Secção dos Cards - Apenas 2 -->
+    <main class="cards-container">
+        <!-- Card 1: Achadinhos -->
+        <div class="card">
+            <div class="card-icon">
+                <img src="img/icon-feed.png" width="120" alt="Ícone de Feed">
+            </div>
+            <div>
+                <h2>Post - FEED</h2>
+                <p style="text-align: justify;">Itens numerados de acordo com o post do feed que você assistiu. Veja a numeração da publicação na legenda dela e clique em descobrir para encontrar o seu achadinho favorito!</p>
+            </div>
+            <a href="achadinhos.html" class="card-btn">DESCOBRIR</a>
+        </div>
+
+        <!-- Card 2: Reels das Promos -->
+        <div class="card">
+            <div class="card-icon">
+                <img src="img/icon-reels.png" width="150" alt="Ícone de Reels">
+            </div>
+            <div>
+                <h2>Post - REELS</h2>
+                <p style="text-align: justify;">Itens numerados de acordo com o post do REELS que você assistiu. Veja a numeração da publicação em sua legenda e retorne aqui para encontrar o seu achadinho favorito!</p>
+            </div>
+            <a href="reels.html" class="card-btn" target="_blank" rel="noopener">ASSISTIR AGORA</a>
+        </div>
+    </main>
 </body>
 </html>

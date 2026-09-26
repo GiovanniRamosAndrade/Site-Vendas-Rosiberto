@@ -1,6 +1,11 @@
 (() => {
-  const key = 'vitrine-draft-v1';
+  const catalog = document.body.dataset.catalog === 'reels' ? 'reels' : 'feed';
+  const key = catalog === 'reels' ? 'vitrine-reels-draft-v1' : 'vitrine-draft-v1';
   const publishKey = new URLSearchParams(location.hash.slice(1)).get('chave') || '';
+  const feedAdminLink = document.querySelector('#feed-admin-link');
+  if (feedAdminLink) feedAdminLink.href = 'admin.html' + location.hash;
+  const reelsAdminLink = document.querySelector('#reels-admin-link');
+  if (reelsAdminLink) reelsAdminLink.href = 'reels-admin.html' + location.hash;
   const base = window.VITRINE_DADOS || {siteTitle:'Produtos e promoções',brand:'#7c442b',products:[]};
   const clone = value => JSON.parse(JSON.stringify(value));
   let data = clone(base);
@@ -8,6 +13,10 @@
     const saved = JSON.parse(localStorage.getItem(key));
     if (saved && Array.isArray(saved.products)) data = saved;
   } catch (_) { /* Começa com a versão publicada. */ }
+  if (catalog === 'reels') {
+    data.brand = window.VITRINE_FEED_BRAND || data.brand;
+    document.querySelector('#brand').closest('label').hidden = true;
+  }
   let selected = data.products[0]?.id || null;
   const $ = selector => document.querySelector(selector);
   const form = $('#editor');
@@ -141,7 +150,7 @@
       const response = await fetch('/api/publicar', {
         method: 'POST',
         headers: {'Content-Type':'application/json', 'Authorization':'Bearer ' + publishKey},
-        body: JSON.stringify(data), cache: 'no-store'
+        body: JSON.stringify({catalog, data}), cache: 'no-store'
       });
       const result = await response.json();
       if (!response.ok) throw Error(result.error || 'Falha ao publicar.');
@@ -151,7 +160,7 @@
   });
   $('#export-backup').addEventListener('click', () => {
     if (!commit()) return;
-    download('backup-vitrine.json', JSON.stringify(data, null, 2), 'application/json;charset=utf-8');
+    download(`backup-vitrine-${catalog}.json`, JSON.stringify(data, null, 2), 'application/json;charset=utf-8');
   });
   $('#import-backup').addEventListener('change', async event => {
     const file = event.target.files[0]; if (!file) return;
@@ -159,13 +168,16 @@
       const imported = JSON.parse(await file.text());
       if (!Array.isArray(imported.products) || imported.products.some(p => !p || typeof p.id !== 'string' || typeof p.title !== 'string' || !Array.isArray(p.links))) throw Error('Formato inválido');
       if (!confirm('Substituir o rascunho atual pelos dados do backup?')) return;
-      data = imported; selected = data.products[0]?.id || null; save(); render(); message('Backup importado.');
+      data = imported; if (catalog === 'reels') data.brand = window.VITRINE_FEED_BRAND || data.brand;
+      selected = data.products[0]?.id || null; save(); render(); message('Backup importado.');
     } catch (_) { message('Não foi possível importar. Escolha um backup JSON válido desta vitrine.', true); }
     finally { event.target.value = ''; }
   });
   $('#reset-draft').addEventListener('click', () => {
     if (!confirm('Descartar o rascunho deste navegador e carregar os dados publicados?')) return;
-    localStorage.removeItem(key); data = clone(base); selected = data.products[0]?.id || null; render(); message('Dados publicados carregados.');
+    localStorage.removeItem(key); data = clone(base);
+    if (catalog === 'reels') data.brand = window.VITRINE_FEED_BRAND || data.brand;
+    selected = data.products[0]?.id || null; render(); message('Dados publicados carregados.');
   });
   window.addEventListener('beforeunload', e => {
     if (!current()) return;
