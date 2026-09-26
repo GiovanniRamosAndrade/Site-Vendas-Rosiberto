@@ -1,5 +1,5 @@
 window.VITRINE_DADOS = {
-  "siteTitle": "Produtos do Reels",
+  "siteTitle": "POST - Reels",
   "brand": "#583300",
   "products": [
     {
